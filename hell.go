@@ -87,29 +87,39 @@
 // //     ]
 // // }
 
+// package main
+
+// import (
+// 	"encoding/json"
+// 	"fmt"
+// 	_ "fmt"
+// 	"net/http"
+// )
+
+// type dataGov struct {
+// 	Global_id int64
+// }
+
+// func main() {
+// 	resp, _ := http.Get("https://raw.githubusercontent.com/semyon-dev/stepik-go/master/work_with_json/data-20190514T0100.json")
+// 	gov := []dataGov{}
+// 	json.NewDecoder(resp.Body).Decode(&gov)
+
+// 	var sum int64
+
+// 	for _, value := range gov {
+// 		sum += value.Global_id
+// 	}
+
+// 	fmt.Println(sum)
+// }
+
 package main
 
-import (
-	"encoding/json"
-	"fmt"
-	_ "fmt"
-	"net/http"
-)
+import "fmt"
+import "strconv"
 
-type dataGov struct {
-    Global_id int64
-}
 
 func main() {
-	resp, _ := http.Get("https://raw.githubusercontent.com/semyon-dev/stepik-go/master/work_with_json/data-20190514T0100.json")
-	gov := []dataGov{}
-	json.NewDecoder(resp.Body).Decode(&gov)
-	
-	var sum int64
-
-	for _, value := range gov {
-		sum += value.Global_id
-	}
-
-	fmt.Println(sum)
+	fmt.Println(delete(727178))
 }

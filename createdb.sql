@@ -3,7 +3,7 @@ ALTER DATABASE "L0WB" OWNER TO postgres;
 \connect "L0WB"
 
 CREATE TABLE "Deliverys" (
-    id integer NOT NULL,
+    id integer PRIMARY KEY,
     name text NOT NULL,
     phone text,
     zip text NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE "Deliverys" (
 );
 
 CREATE TABLE "Items" (
-    id integer NOT NULL,
+    id integer PRIMARY KEY,
     chrt_id bigint,
     track_number text,
     price integer NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE "Items" (
 );
 
 CREATE TABLE "Orders" (
-    id integer NOT NULL,
+    id integer PRIMARY KEY,
     order_uid text NOT NULL,
     track_number text,
     entry text,
@@ -46,7 +46,7 @@ CREATE TABLE "Orders" (
 );
 
 CREATE TABLE "Payments" (
-    id integer NOT NULL,
+    id integer PRIMARY KEY,
     transaction text NOT NULL,
     request_id text,
     currency text NOT NULL,

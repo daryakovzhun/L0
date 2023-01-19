@@ -1,0 +1,14 @@
+port: "8000"
+
+db:
+  username: "postgres"
+  password: "2426101527"
+  host: "127.0.0.1"
+  port: "5432"
+  dbname: "L0WB"
+  sslmode: "disable"
+
+natStreaming:
+  clusterId: "test-cluster"
+  clientId: "test-client"
+  natsURL: "nats://localhost:4222"

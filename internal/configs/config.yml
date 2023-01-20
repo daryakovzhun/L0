@@ -5,7 +5,7 @@ db:
   password: "2426101527"
   host: "127.0.0.1"
   port: "5432"
-  dbname: "L0WB"
+  dbname: "L0WB-test"
   sslmode: "disable"
 
 natStreaming:

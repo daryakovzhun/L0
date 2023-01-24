@@ -16,7 +16,7 @@ func NewSvController(rep rep.RpController) *SvController {
 func (SC *SvController) GetOrder(order_uid string) (mod.Order, error) {
 	ord, err := SC.rep.GetOrder(order_uid)
 	if err != nil {
-		//return nil, err
+		return mod.Order{}, err
 	}
 	return ord, err
 }
@@ -32,7 +32,7 @@ func (SC *SvController) InsertOrder(ord *mod.Order) error {
 func (SC *SvController) GetAllOrders() (map[string]mod.Order, error) {
 	ord, err := SC.rep.GetAllOrders()
 	if err != nil {
-		//return nil, err
+		return nil, err
 	}
 	return ord, err
 }

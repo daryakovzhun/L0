@@ -7,10 +7,10 @@ import (
 	"L0WB/pkg/service"
 	"encoding/json"
 	"fmt"
+
 	"github.com/nats-io/stan.go"
 	"github.com/spf13/viper"
 	"github.com/subosito/gotenv"
-	_ "github.com/subosito/gotenv"
 	"io"
 	"log"
 	"math/rand"
@@ -81,8 +81,7 @@ func SubscriberNats(s *service.Service, conn stan.Conn) {
 			return
 		}
 		checkFail("InsertOrder", s.SvControllerData.InsertOrder(&ord))
-		//s.Cache[ord.Order_uid] = ord
-		s.Cache.Set(ord.Order_uid, ord, time.Minute)
+		s.Cache.Set(ord.Order_uid, ord, 15*time.Minute)
 
 		fmt.Printf("seq = %d [redelivered = %v] mes= %s \n", msg.Sequence, msg.Redelivered, msg.Data)
 

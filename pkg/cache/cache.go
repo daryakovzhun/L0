@@ -2,12 +2,13 @@ package cache
 
 import (
 	"L0WB/internal/domain"
+	"errors"
 	"sync"
 	"time"
 )
 
 type CacheItem struct {
-	value        domain.Order
+	value        interface{}
 	timeCreation time.Time
 	timeDuration time.Duration
 }
@@ -26,7 +27,7 @@ func New() *Cache {
 	return &cacheNew
 }
 
-func (c *Cache) Set(key string, value domain.Order, ttl time.Duration) {
+func (c *Cache) Set(key string, value interface{}, ttl time.Duration) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
@@ -50,13 +51,13 @@ func (c *Cache) SetFew(ords map[string]domain.Order, ttl time.Duration) {
 	}
 }
 
-func (c *Cache) Get(key string) (domain.Order, error) {
+func (c *Cache) Get(key string) (interface{}, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	k, ok := c.cache[key]
 
 	if !ok {
-		//return domain.Order{Order_uid: ""}, errors.New("invalid key")
+		return nil, errors.New("Key (" + key + ") not found")
 	}
 	return k.value, nil
 }

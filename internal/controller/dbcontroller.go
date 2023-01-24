@@ -70,17 +70,17 @@ func (DC *DbController) GetOrder(order_uid string) (mod.Order, error) {
 
 	err = DC.GetDelivery(order_uid, &ord.Delivery)
 	if err != nil {
-		//		return nil, err   TO DO
+		return mod.Order{}, err
 	}
 
 	err = DC.GetPayment(order_uid, &ord.Payment)
 	if err != nil {
-		//		return nil, err   TO DO
+		return mod.Order{}, err
 	}
 
 	err = DC.GetItems(order_uid, &ord.Items)
 	if err != nil {
-		//		return nil, err   TO DO
+		return mod.Order{}, err
 	}
 
 	return ord, nil

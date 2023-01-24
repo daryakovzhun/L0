@@ -113,8 +113,10 @@ func (DC *DbController) GetAllOrders() (map[string]mod.Order, error) {
 func (DC *DbController) InsertDelivery(order_uid string, del *mod.Delivery) (err error) {
 	query := fmt.Sprintf(`INSERT INTO delivery(
 			order_uid, name, phone, zip, city, address, region, email)
-			VALUES($1, :name, :phone, :zip, :city, :address, :region, :email);`, order_uid)
-	_, err = DC.db.NamedExec(query, del)
+			VALUES($1, $2, $3, $4, $5, $6, $7, $8);`)
+
+	_, err = DC.db.Exec(query, order_uid, del.Name, del.Phone, del.Zip,
+		del.City, del.Address, del.Region, del.Email)
 	if err != nil {
 		return err
 	}
@@ -125,9 +127,10 @@ func (DC *DbController) InsertPayment(order_uid string, pay *mod.Payment) (err e
 	query := fmt.Sprintf(`INSERT INTO payment(
 			order_uid, transaction, request_id, currency, provider, amount, 
             payment_dt, bank, delivery_cost, goods_total, custom_fee)
-			VALUES($1, :transaction, :request_id, :currency, :provider,:amount,
-			       :payment_dt, :bank, :delivery_cost, :goods_total, :custom_fee);`, order_uid)
-	_, err = DC.db.NamedExec(query, pay)
+			VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`)
+	_, err = DC.db.Exec(query, order_uid, pay.Transaction, pay.Request_id,
+		pay.Currency, pay.Provider, pay.Amount, pay.Payment_dt, pay.Bank, pay.Delivery_cost,
+		pay.Goods_total, pay.Custom_fee)
 	if err != nil {
 		return err
 	}
@@ -137,8 +140,9 @@ func (DC *DbController) InsertPayment(order_uid string, pay *mod.Payment) (err e
 func (DC *DbController) InsertItem(order_uid string, itm *mod.Item) (err error) {
 	query := fmt.Sprintf(`INSERT INTO items(
 			order_uid, chrt_id, track_number, price, rid, name, sale, size, total_price, nm_id, brand, status)
-			VALUES($1,:chrt_id, :track_number, :price, :rid, :name, :sale, :size, :total_price, :nm_id, :brand, :status);`, order_uid)
-	_, err = DC.db.NamedExec(query, itm)
+			VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);`)
+	_, err = DC.db.Exec(query, order_uid, itm.Chrt_id, itm.Track_number,
+		itm.Price, itm.Rid, itm.Name, itm.Sale, itm.Size, itm.Total_price, itm.Nm_id, itm.Brand, itm.Status)
 	if err != nil {
 		return err
 	}

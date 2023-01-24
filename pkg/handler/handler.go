@@ -30,5 +30,6 @@ func (h *Handler) InitRouters() {
 	http.Handle("/", http.FileServer(http.Dir("web/")))
 	http.HandleFunc("/order", h.GetOrderById)
 
+	log.Println("SERVER START (port 8080)")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

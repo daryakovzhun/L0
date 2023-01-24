@@ -45,8 +45,9 @@ func main() {
 	server := service.NewService(repos)
 	handle := handler.NewHandler(server)
 
-	server.Cache, err = server.SvControllerData.GetAllOrders()
+	ords, err := server.SvControllerData.GetAllOrders()
 	checkFail("GetAllOrders Cache", err)
+	server.Cache.SetFew(ords, 15*time.Minute)
 
 	go startNats(server)
 
@@ -78,7 +79,8 @@ func SubscriberNats(s *service.Service, conn stan.Conn) {
 			return
 		}
 		checkFail("InsertOrder", s.SvControllerData.InsertOrder(&ord))
-		s.Cache[ord.Order_uid] = ord
+		//s.Cache[ord.Order_uid] = ord
+		s.Cache.Set(ord.Order_uid, ord, time.Minute)
 
 		fmt.Printf("seq = %d [redelivered = %v] mes= %s \n", msg.Sequence, msg.Redelivered, msg.Data)
 

@@ -2,6 +2,7 @@ package service
 
 import (
 	mod "L0WB/internal/domain"
+	"L0WB/pkg/cache"
 	rep "L0WB/pkg/repository"
 )
 
@@ -13,12 +14,12 @@ type SvControllerData interface {
 
 type Service struct {
 	SvControllerData
-	Cache map[string]mod.Order
+	Cache *cache.Cache
 }
 
 func NewService(rep *rep.Repository) *Service {
 	return &Service{
 		SvControllerData: NewSvController(rep.RpController),
-		Cache:            make(map[string]mod.Order),
+		Cache:            cache.New(),
 	}
 }

@@ -20,10 +20,14 @@ func (h *Handler) GetOrderById(w http.ResponseWriter, r *http.Request) {
 	temp, _ := template.ParseFiles("web/order.html")
 	uid := r.FormValue("uid")
 
-	ord, _ := h.services.Cache[uid]
+	ord, _ := h.services.Cache.Get(uid)
 	data, _ := json.MarshalIndent(ord, "", "\t")
-	temp.Execute(w, string(data))
+	res := string(data)
+	if ord.Order_uid == "" {
+		res = "Not found UID"
+	}
 
+	temp.Execute(w, res)
 }
 
 func (h *Handler) InitRouters() {

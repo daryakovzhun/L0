@@ -9,10 +9,12 @@ import (
 	"fmt"
 	"github.com/nats-io/stan.go"
 	"github.com/spf13/viper"
+	"github.com/subosito/gotenv"
 	_ "github.com/subosito/gotenv"
 	"io"
 	"log"
 	"math/rand"
+	"os"
 	"time"
 )
 
@@ -23,9 +25,9 @@ func init() {
 		log.Println(err)
 	}
 
-	//if err := gotenv.Load(); err != nil {
-	//	log.Println(err)
-	//}
+	if err := gotenv.Load(); err != nil {
+		log.Println(err)
+	}
 }
 
 func main() {
@@ -33,7 +35,7 @@ func main() {
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
-		Password: viper.GetString("db.password"),
+		Password: os.Getenv("DB_PASSWORD"),
 		DbName:   viper.GetString("db.dbname"),
 		SSLMode:  viper.GetString("db.sslmode"),
 	}
